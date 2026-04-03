@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@types/chrome": "^0.0.260",
-    "copy-webpack-plugin": "^11.0.0",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^6.8.1",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.5.1",
