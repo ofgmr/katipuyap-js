@@ -1370,6 +1370,26 @@ class Account {
             }
         });
     }
+
+    /**
+     * HTML içeriğini güvenli bir şekilde düz metne dönüştürür.
+     * <br> satır sonları gerçek satır sonlarına çevrilir, diğer HTML etiketleri kaldırılır.
+     */
+    sanitizePetitionContentToText(htmlContent) {
+        if (htmlContent == null) {
+            return '';
+        }
+
+        const container = document.createElement('div');
+        container.innerHTML = String(htmlContent);
+
+        let text = container.textContent || container.innerText || '';
+
+        // Satır sonlarını normalize et
+        text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+        return text;
+    }
     
     downloadPetitionAsUDF(petition) {
         // UDF formatı için basit bir yapı
@@ -1379,7 +1399,7 @@ DOSYA_NO: ${petition.davaNo}
 DILEKCE_TURU: ${petition.type}
 TARIH: ${new Date().toLocaleDateString('tr-TR')}
 ICERIK_BASLANGIC
-${petition.content.replace(/<br>/g, '\n').replace(/<[^>]*>/g, '')}
+${this.sanitizePetitionContentToText(petition.content)}
 ICERIK_BITIS`;
         
         // Dosya oluştur ve indir
